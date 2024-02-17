@@ -36,7 +36,7 @@ public class MainService {
         connection.connect();
         // 设置请求体
         String imageBase64 = Base64Util.image2Base64(imageUrl);
-        String requestBody = "image=" + URLEncoder.encode(imageBase64, StandardCharsets.UTF_8);
+        String requestBody = "image=" + URLEncoder.encode(imageBase64, StandardCharsets.UTF_8) + "&show=true";
         try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
             wr.writeBytes(requestBody);
             wr.flush();
