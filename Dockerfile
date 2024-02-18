@@ -6,6 +6,8 @@ VOLUME /app/logs
 
 COPY /target/app.jar /app/app.jar
 
+ENV TZ=Asia/Shanghai
+
 ENV TOKEN=test
 ENV CLIENT_ID=test
 ENV CLIENT_SECRET=test

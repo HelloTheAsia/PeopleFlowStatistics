@@ -16,7 +16,7 @@ public class MainController {
     }
 
     @GetMapping("/people-flow")
-    public PersonFlow peopleFlow(@RequestParam String imageUrl) throws Exception {
-        return mainService.httpGet(imageUrl);
+    public PersonFlow peopleFlow(@RequestParam String imageUrl, @RequestParam(defaultValue = "false", required = false) String show) throws Exception {
+        return mainService.httpGet(imageUrl, show);
     }
 }
