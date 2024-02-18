@@ -3,6 +3,7 @@ package com.hiasia.peopleflowstatistics.service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiasia.peopleflowstatistics.dao.PersonFlowRepository;
@@ -59,5 +60,10 @@ public class MainService {
         personFlow.setLog_id("fail");
         personFlowRepository.save(personFlow);
         return personFlow;
+    }
+
+    public Integer lastDayPersonNumber() {
+        List<PersonFlow> personFlows = personFlowRepository.findDataBetweenDates();
+        return personFlows.stream().mapToInt(PersonFlow::getPerson_num).sum();
     }
 }

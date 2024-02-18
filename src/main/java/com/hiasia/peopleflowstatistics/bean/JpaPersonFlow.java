@@ -27,4 +27,12 @@ public class JpaPersonFlow {
         this.logId = personFlow.getLog_id();
         this.createdTime = LocalDateTime.now();
     }
+
+    public PersonFlow toPersonFlow() {
+        PersonFlow personFlow = new PersonFlow();
+        personFlow.setImage(this.image);
+        personFlow.setPerson_num(this.personNum);
+        personFlow.setLog_id(this.logId);
+        return personFlow;
+    }
 }
