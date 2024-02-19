@@ -1,10 +1,15 @@
 package com.hiasia.peopleflowstatistics.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class PersonFlow {
-    private String image;
-    private Integer person_num;
-    private String log_id;
+  private String image;
+
+  @JsonProperty("person_num")
+  private Integer personNum;
+
+  @JsonProperty("log_id")
+  private String logId;
 }
