@@ -18,8 +18,10 @@ public class MainController {
     }
 
     @GetMapping
-    public PersonFlow peopleFlow(@RequestParam String imageUrl, @RequestParam(defaultValue = "false", required = false) String show) throws Exception {
-        return mainService.httpGet(imageUrl, show);
+    public PersonFlow peopleFlow(@RequestParam String imageUrl,
+                                 @RequestParam(defaultValue = "false", required = false) String show,
+                                 @RequestParam(defaultValue = "0", required = false) Integer deviation) {
+        return mainService.httpGet(imageUrl, show, deviation);
     }
 
     @GetMapping("/last-day-person-number")

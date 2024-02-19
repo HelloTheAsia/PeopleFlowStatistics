@@ -30,7 +30,7 @@ public class MainService {
     private String clientSecret;
     private @Resource PersonFlowRepository personFlowRepository;
 
-    public PersonFlow httpGet(String imageUrl, String show) {
+    public PersonFlow httpGet(String imageUrl, String show, Integer deviation) {
         try {
             String httpAccessToken = BaiduTokenUtil.getAccessToken(clientId, clientSecret);
             String apiUrl = "https://aip.baidubce.com/rest/2.0/image-classify/v1/body_num?access_token=" + httpAccessToken;
@@ -48,8 +48,11 @@ public class MainService {
 
             Response response = HTTP_CLIENT.newCall(request).execute();
             String responseString = response.body().string();
+            // json转换为对象
             ObjectMapper objectMapper = new ObjectMapper();
             PersonFlow personFlow = objectMapper.readValue(responseString, PersonFlow.class);
+            // 减去偏差值
+            personFlow.setPerson_num(personFlow.getPerson_num() - deviation);
             personFlowRepository.save(personFlow);
             return personFlow;
         } catch (Exception e) {
