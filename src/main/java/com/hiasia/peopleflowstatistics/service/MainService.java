@@ -5,6 +5,7 @@ import static com.hiasia.peopleflowstatistics.utils.BaiduTokenUtil.HTTP_CLIENT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiasia.peopleflowstatistics.dao.PersonFlowRepository;
 import com.hiasia.peopleflowstatistics.pojo.PersonFlow;
+import com.hiasia.peopleflowstatistics.result.PersonNumberRes;
 import com.hiasia.peopleflowstatistics.utils.BaiduTokenUtil;
 import com.hiasia.peopleflowstatistics.utils.Base64Util;
 import jakarta.annotation.Resource;
@@ -56,7 +57,10 @@ public class MainService {
               .build();
 
       Response response = HTTP_CLIENT.newCall(request).execute();
-      String responseString = response.body().string();
+      String responseString = null;
+      if (response.body() != null) {
+        responseString = response.body().string();
+      }
       // json转换为对象
       ObjectMapper objectMapper = new ObjectMapper();
       PersonFlow personFlow = objectMapper.readValue(responseString, PersonFlow.class);
@@ -78,8 +82,11 @@ public class MainService {
     return personFlow;
   }
 
-  public Integer lastDayPersonNumber() {
+  public PersonNumberRes lastDayPersonNumber() {
     List<PersonFlow> personFlows = personFlowRepository.findDataBetweenDates();
-    return personFlows.stream().mapToInt(PersonFlow::getPersonNum).sum();
+    PersonNumberRes personNumberRes = new PersonNumberRes();
+    // 计算店里全部识别的人数,减少人多时多预测的人数(缩小误差)
+    personNumberRes.initPersonNumberRes(personFlows);
+    return personNumberRes;
   }
 }

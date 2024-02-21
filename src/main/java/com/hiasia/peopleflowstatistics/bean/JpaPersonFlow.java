@@ -34,6 +34,7 @@ public class JpaPersonFlow {
     personFlow.setImage(this.image);
     personFlow.setPersonNum(this.personNum);
     personFlow.setLogId(this.logId);
+    personFlow.setCreatedTime(this.createdTime);
     return personFlow;
   }
 }
